@@ -1,0 +1,97 @@
+.data 
+x: .asciiz "Enter first number "
+y: .asciiz "Enter second number "
+z: .asciiz "Select an operation "
+
+.text
+main: 
+#print "Enter first number"
+la $a0, x
+li $v0, 4
+syscall
+
+#capture input into $s0
+li $v0, 5
+syscall
+add $s0, $v0, $0
+
+#print "Enter second number"
+la $a0, y
+li $v0, 4
+syscall
+
+#capture input into $s1
+li $v0, 5
+syscall
+add $s1, $v0, $0
+
+operation:
+#print "Select an operation"
+la $a0, z
+li $v0, 4
+syscall
+
+#capture input into $s2
+li $v0, 5
+syscall
+add $s2, $v0, $0
+
+#if input = '*' goto multiply
+li $t0, 42
+beq $t0, $s2, multiply
+
+#if input = '+' goto addition
+li $t0, 43
+beq $t0, $s2, addition
+
+#if input = '-' goto subtraction
+li $t0, 45
+beq $t0, $s2, subtraction
+
+#if input = '/' goto division
+li $t0, 47
+beq $t0, $s2, division
+
+multiply:
+#multiply $s0 * $s1
+#print result
+mul $a0, $s0, $s1
+li $v0, 1
+syscall
+
+#end program
+li $v0, 10
+syscall
+
+addition:
+#add $s0 + $s1
+#print result
+add $a0, $s0, $s1
+li $v0, 1
+syscall
+
+#end program
+li $v0, 10
+syscall
+
+subtraction:
+#subtract $s0 - $s1
+#print result
+sub $a0, $s0, $s1
+li $v0, 1
+syscall
+
+#end program
+li $v0, 10
+syscall
+
+division:
+#divide $s0 * $s1
+#print result
+div $a0, $s0, $s1
+li $v0, 1
+syscall
+
+#end program
+li $v0, 10
+syscall
